@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-height,user-scalable=no">
+
+<head>
+    <style>
+        .supra-gradient {
+            -webkit-overflow-scrolling: touch;
+            background-image:
+                linear-gradient(to top, black 20%, transparent, white 80%),
+                linear-gradient(to right, Red, Orange, Yellow, Green, Blue, Purple, Indigo);
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="400" height="300" class="supra-gradient" viewBox="-200 -150 400 300" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" onload="makeDraggable(evt)">
+        <style>
+            .static {
+                cursor: not-allowed;
+            }
+
+            .draggable {
+                cursor: move;
+            }
+        </style>
+        <script type="text/javascript">
+            //<![CDATA[
+            function makeDraggable(evt) {
+                var svg = evt.target;
+
+                svg.addEventListener('mousedown', startDrag);
+                svg.addEventListener('mousemove', drag);
+                svg.addEventListener('mouseup', endDrag);
+                svg.addEventListener('mouseleave', endDrag);
+                svg.addEventListener('touchstart', startDrag);
+                svg.addEventListener('touchmove', drag);
+                svg.addEventListener('touchend', endDrag);
+                svg.addEventListener('touchleave', endDrag);
+                svg.addEventListener('touchcancel', endDrag);
+
+                var selectedElement, offset, transform,
+                    bbox, minX, maxX, minY, maxY, confined;
+
+                var boundaryX1 = 20;
+                var boundaryX2 = 180;
+                var boundaryY1 = -130;
+                var boundaryY2 = 130;
+
+                function getMousePosition(evt) {
+                    var CTM = svg.getScreenCTM();
+                    if (evt.touches) { evt = evt.touches[0]; }
+                    return {
+                        x: (evt.clientX - CTM.e) / CTM.a,
+                        y: (evt.clientY - CTM.f) / CTM.d
+                    };
+                }
+
+                function startDrag(evt) {
+                    if (evt.target.classList.contains('draggable')) {
+                        selectedElement = evt.target;
+                        offset = getMousePosition(evt);
+
+                        // Make sure the first transform on the element is a translate transform
+                        var transforms = selectedElement.transform.baseVal;
+
+                        if (transforms.length === 0 || transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
+                            // Create an transform that translates by (0, 0)
+                            var translate = svg.createSVGTransform();
+                            translate.setTranslate(0, 0);
+                            selectedElement.transform.baseVal.insertItemBefore(translate, 0);
+                        }
+
+                        // Get initial translation
+                        transform = transforms.getItem(0);
+                        offset.x -= transform.matrix.e;
+                        offset.y -= transform.matrix.f;
+
+                        confined = evt.target.classList.contains('confine');
+                        if (confined) {
+                            bbox = selectedElement.getBBox();
+                            minX = boundaryX1 - bbox.x;
+                            maxX = boundaryX2 - bbox.x - bbox.width;
+                            minY = boundaryY1 - bbox.y;
+                            maxY = boundaryY2 - bbox.y - bbox.height;
+                        }
+                    }
+                }
+
+                function drag(evt) {
+
+                    if (selectedElement) {
+
+                        evt.preventDefault();
+
+                        var coord = getMousePosition(evt);
+                        var dx = coord.x - offset.x;
+                        var dy = coord.y - offset.y;
+
+                        if (confined) {
+                            if (dx < minX) { dx = minX; }
+                            else if (dx > maxX) { dx = maxX; }
+                            if (dy < minY) { dy = minY; }
+                            else if (dy > maxY) { dy = maxY; }
+                        }
+
+                        transform.setTranslate(dx, dy);
+                        moveLine(evt, dx, dy)
+
+
+                    }
+                }
+
+                function endDrag(evt) {
+                    selectedElement = false;
+                }
+
+                function moveLine(evt, dx, dy) {
+
+                    switch (evt.target.id) {
+                        case "Ip":
+                            document.querySelector("#IxIp").setAttribute('x1', dx)
+                            document.querySelector("#IxIp").setAttribute('y1', dy + 30)
+                            break;
+
+                        case "Ix":
+                            document.querySelector("#IxIp").setAttribute('x2', dx)
+                            document.querySelector("#IxIp").setAttribute('y2', dy)
+                            break;
+                    }
+
+                }
+            }
+            //]]>
+        </script>
+        <defs>
+            <symbol id="Me" viewBox="0 0 30 90" preserveAspectRatio="xMidYMid meet">
+                <rect x="1" y="61" width="28" height="28" />
+                <circle r="14" cx="15" cy="15" />
+                <line x1="15" y1="15" x2="15" y2="75" />
+            </symbol>
+
+            <symbol id="We" viewBox="0 0 90 120" preserveAspectRatio="xMidYMid meet">
+                <rect x="1" y="61" width="28" height="28" />
+                <circle r="14" cx="15" cy="15" />
+                <line x1="15" y1="15" x2="15" y2="75" />
+
+                <rect x="31" y="91" width="28" height="28" />
+                <circle r="14" cx="45" cy="45" />
+                <line x1="45" y1="45" x2="45" y2="105" />
+
+                <rect x="61" y="61" width="28" height="28" />
+                <circle r="14" cx="75" cy="15" />
+                <line x1="75" y1="15" x2="75" y2="75" />
+            </symbol>
+        </defs>
+
+        <use x="-190" y="110" width="10" height="30" xlink:href="#Me" fill="white" stroke="white" />
+        <use x="160" y="-150" width="30" height="40" xlink:href="#We" fill="black" stroke="black" />
+
+        <line id="IxIp" x1="0" y1="0" x2="0" y2="30" stroke="black" />
+        <rect class="draggable" id="Ix" transform="translate(0 30)" x="-14" y="1" width="28" height="28"
+            stroke="white" />
+        <circle class="draggable" id="Ip" transform="translate(0 -30)" r="14" cx="1" cy="15" stroke="white" />
+    </svg>
+</body>
+
+</html>
