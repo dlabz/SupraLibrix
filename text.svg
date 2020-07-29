@@ -1,0 +1,21 @@
+<svg version="1.1" width="100%" height="100%" style="background: #ddd;"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="-400 -300 800 600">
+
+    <defs>
+        <text id="ReferencedText">
+            Referenced character data
+        </text>
+    </defs>
+
+    <rect x="-40%" y="-40%" width="80%" height="80%" stroke="black" fill="none" />
+    <line x1="0" x2="0%" y1="-50%" y2="50%" stroke="black" />
+    <line x1="-50%" x2="50%" y1="0%" y2="0%" stroke="black" />
+    
+    <text fill="red" text-anchor="middle" x="0" y="-42.5%" font-size="40">Top text block</text>
+    <text fill="red" text-anchor="middle" x="0" y="47.5%" font-size="40">Bottom text block</text>
+
+    <text fill="red" text-anchor="start" x="-47.5%" y="0" font-size="40"><tspan>-</tspan></text>
+    <text fill="red" text-anchor="end" x="47.5%" y="0" font-size="40"><tspan >+</tspan></text>
+
+</svg>
