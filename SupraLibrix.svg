@@ -193,6 +193,7 @@
         </script>
     </defs>
     <rect x="-50%" y="-50%" width="100%" height="100%" filter="url(#f1)"/>
+    
     <text fill="black" text-anchor="middle" x="0" y="-37.5%" font-size="40">Give</text>
     <text fill="white" text-anchor="middle" x="0" y="47.5%" font-size="40">Take</text>
 
@@ -204,14 +205,14 @@
     </text>
 
     <g class="I" fill="red" stroke="red">
-        <rect id="Ix" class="draggable confine" transform="translate(0 30)" x="-14" y="-14" width="28" height="28" stroke="white" />
         <polygon id="Iw" class="draggable confine" transform="translate(0 0)" points="0,-14 12,6 -12,6" stroke="white" />
+        <rect id="Ix" class="draggable confine" transform="translate(0 30)" x="-14" y="-14" width="28" height="28" stroke="white" />
         <circle id="Ip" class="draggable confine" transform="translate(0 -30)" r="14" cx="0" cy="0" stroke="white" />
     </g>
 
     <g class="I" fill="blue" stroke="blue">
-        <rect id="Yx" class="draggable confine" transform="translate(30 30)" x="-14" y="-14" width="28" height="28" stroke="white" />
         <polygon id="Yw" class="draggable confine" transform="translate(30 0)" points="0,-14 12,6 -12,6" stroke="white" />
+        <rect id="Yx" class="draggable confine" transform="translate(30 30)" x="-14" y="-14" width="28" height="28" stroke="white" />
         <circle id="Yp" class="draggable confine" transform="translate(030 -30)" r="14" cx="0" cy="0" stroke="white" />
     </g>
 
