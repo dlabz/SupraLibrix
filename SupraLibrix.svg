@@ -1,0 +1,218 @@
+<svg version="1.1" width="100%" height="100%"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" onload="makeDraggable(evt)" viewBox="-200 -150 400 300">
+
+    <defs>
+        <!-- Red,       Orange,     Yellow,     Green,      Blue,       Purple,     Indigo -->
+        <!-- #ff0000 ,  #ff9900,    #ffff00,    #6aa84f,    #0000ff,    #9900ff,    #674ea7 -->
+        <linearGradient id="x-gradient" gradientUnits="objectBoundingBox" spreadMethod="pad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ff0000" />
+            <stop offset="13.3%" stop-color="#ff9900" />
+            <stop offset="36.6%" stop-color="#ffff00" />
+            <stop offset="50%" stop-color="#6aa84f" />
+            <stop offset="63.3%" stop-color="#0000ff" />
+            <stop offset="86.6%" stop-color="#9900ff" />
+            <stop offset="100%" stop-color="#674ea7" />
+        </linearGradient>
+        <rect id="x-gradient-rect" x="0%" y="0%" width="100%" height="100%" fill="url(#x-gradient)" />
+
+        <linearGradient id="y-gradient" gradientUnits="objectBoundingBox" spreadMethod="pad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="20%" stop-color="#FFFFFF" stop-opacity="100%" />
+            <stop offset="45%" stop-opacity="0" />
+            <stop offset="55%" stop-opacity="0" />
+            <stop offset="80%" stop-color="#000000" stop-opacity="100%"/>
+        </linearGradient>
+        <rect id="y-gradient-rect" x="0%" y="0%" width="100%" height="100%" fill="url(#y-gradient)" />
+
+        <filter id="f1" x="0" y="0" width="100%" height="100%">
+            <feImage xlink:href="#x-gradient-rect" result="gx"/>
+            <feImage xlink:href="#y-gradient-rect" result="gy"/>
+            <feComposite in="gy" in2="gx" />
+        </filter>
+        <style type="text/css">
+            .static {
+                cursor: not-allowed;
+            }
+
+            .draggable {
+                cursor: move;
+            }
+        </style>
+
+        <script type="text/ecmascript">//            <![CDATA[
+
+
+            function makeDraggable(evt) {
+                var svg = evt.target;
+
+                svg.addEventListener('mousedown', startDrag);
+                svg.addEventListener('mousemove', drag);
+                svg.addEventListener('mouseup', endDrag);
+                svg.addEventListener('mouseleave', endDrag);
+                svg.addEventListener('touchstart', startDrag);
+                svg.addEventListener('touchmove', drag);
+                svg.addEventListener('touchend', endDrag);
+                svg.addEventListener('touchleave', endDrag);
+                svg.addEventListener('touchcancel', endDrag);
+
+                var selectedElement, offset, transform,
+                    bbox, minX, maxX, minY, maxY, confined;
+
+                var boundaryX1 = -200;
+                var boundaryX2 = 200;
+                var boundaryY1 = -150;
+                var boundaryY2 = 150;
+
+                function getMousePosition(evt) {
+                    var CTM = svg.getScreenCTM();
+                    if (evt.touches) { evt = evt.touches[0]; }
+                    return {
+                        x: (evt.clientX - CTM.e) / CTM.a,
+                        y: (evt.clientY - CTM.f) / CTM.d
+                    };
+                }
+
+                function startDrag(evt) {
+                    if (evt.target.classList.contains('draggable')) {
+                        selectedElement = evt.target;
+                        offset = getMousePosition(evt);
+
+                        // Make sure the first transform on the element is a translate transform
+                        var transforms = selectedElement.transform.baseVal;
+
+                        if (transforms.length === 0 || transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
+                            // Create an transform that translates by (0, 0)
+                            var translate = svg.createSVGTransform();
+                            translate.setTranslate(0, 0);
+                            selectedElement.transform.baseVal.insertItemBefore(translate, 0);
+                        }
+
+                        // Get initial translation
+                        transform = transforms.getItem(0);
+                        offset.x -= transform.matrix.e;
+                        offset.y -= transform.matrix.f;
+
+                        confined = evt.target.classList.contains('confine');
+                        if (confined) {
+                            bbox = selectedElement.getBBox();
+                            minX = boundaryX1 - bbox.x;
+                            maxX = boundaryX2 - bbox.x - bbox.width;
+                            minY = boundaryY1 - bbox.y;
+                            maxY = boundaryY2 - bbox.y - bbox.height;
+                        }
+                    }
+                }
+
+                function drag(evt) {
+
+                    if (selectedElement) {
+
+                        evt.preventDefault();
+
+                        var coord = getMousePosition(evt);
+                        var dx = coord.x - offset.x;
+                        var dy = coord.y - offset.y;
+
+                        if (confined) {
+                            if (dx < minX) { dx = minX; }
+                            else if (dx > maxX) { dx = maxX; }
+                            if (dy < minY) { dy = minY; }
+                            else if (dy > maxY) { dy = maxY; }
+                        }
+
+                        transform.setTranslate(dx, dy);
+
+
+                        moveLine(evt, dx, dy)
+
+
+                    }
+
+
+                    //document.querySelector("#IxIp").split(/\s(?=\S+\(.*?\))(?!rotate(?:Y|Z))/);
+                }
+
+                function endDrag(evt) {
+                    selectedElement = false;
+                }
+
+                function position(id) {
+                    const r = document.querySelector(`#${id}`).getAttribute("transform").match(/translate\((\-?\d*.*)?\s(\-?\d*.*)?\)/)
+                    console.log({ id, r })
+                    return { id, tx: r[1], ty: r[2] }
+                }
+
+                function getShapes() {
+                    const shapes = [...document.querySelectorAll(".draggable").values()].map(v => v.getAttribute("id")).map(id => position(id))
+                    console.log(shapes)
+                    return shapes
+
+                }
+                function getGroups() {
+                    const groups = [...document.querySelectorAll("g.I").values()].map(group => [group, [...group.querySelectorAll(".draggable").values()].map(v => v.getAttribute("id")).map(id => position(id))])//.map(v=>v.getAttribute("id")).map(id=>position(id))
+                    console.log(groups)
+                    return groups
+                }
+                function moveLine(evt, dx, dy) {
+                    const groups = getGroups()
+                    //console.log({ groups })
+                    //const shapes = getShapes()
+                    for (let [group, shapes] of groups.values()) {
+                        //console.log({ group, shapes })
+                        for (let i = 1; i < shapes.length; i++) {
+                            const from = shapes[i - 1]
+                            const to = shapes[i]
+                            const id = `#${from.id}${to.id}`
+
+                            let line = document.querySelector(id)
+                            //console.log({ id, line })
+                            if (line == null) {
+                                line = document.createElementNS(group.namespaceURI, 'line')
+                                line.setAttribute('id', from.id + to.id)
+                                //line.setAttribute('stroke', "black")
+                                line.setAttribute('transform', "translate(0 0)")
+                                //group.appendChild(line)
+                                group.insertBefore(line, group.childNodes[0])
+                                //console.log('created', line)
+                            }
+                            line.setAttribute('x1', from.tx)
+                            line.setAttribute('y1', from.ty)
+                            line.setAttribute('x2', to.tx)
+                            line.setAttribute('y2', to.ty)
+
+                        }
+                    }
+
+
+                }
+            }
+
+            //Horizontal gradients are created when y1 and y2 are equal and x1 and x2 differ
+            //Vertical gradients are created when x1 and x2 are equal and y1 and y2 differ
+            //]]>
+        </script>
+    </defs>
+    <rect x="-50%" y="-50%" width="100%" height="100%" filter="url(#f1)"/>
+    <text fill="black" text-anchor="middle" x="0" y="-37.5%" font-size="40">Give</text>
+    <text fill="white" text-anchor="middle" x="0" y="47.5%" font-size="40">Take</text>
+
+    <text fill="white" text-anchor="start" x="-47.5%" y="0" font-size="40">
+        <tspan>-</tspan>
+    </text>
+    <text fill="white" text-anchor="end" x="47.5%" y="0" font-size="40">
+        <tspan >+</tspan>
+    </text>
+
+    <g class="I" fill="red" stroke="red">
+        <rect id="Ix" class="draggable confine" transform="translate(0 30)" x="-14" y="-14" width="28" height="28" stroke="white" />
+        <polygon id="Iw" class="draggable confine" transform="translate(0 0)" points="0,-14 12,6 -12,6" stroke="white" />
+        <circle id="Ip" class="draggable confine" transform="translate(0 -30)" r="14" cx="0" cy="0" stroke="white" />
+    </g>
+
+    <g class="I" fill="blue" stroke="blue">
+        <rect id="Yx" class="draggable confine" transform="translate(30 30)" x="-14" y="-14" width="28" height="28" stroke="white" />
+        <polygon id="Yw" class="draggable confine" transform="translate(30 0)" points="0,-14 12,6 -12,6" stroke="white" />
+        <circle id="Yp" class="draggable confine" transform="translate(030 -30)" r="14" cx="0" cy="0" stroke="white" />
+    </g>
+
+</svg>
