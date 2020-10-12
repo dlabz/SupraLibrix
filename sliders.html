@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        input.supra-rainbow {
+            -webkit-appearance: none;
+            background-image: linear-gradient(to right, #ff0000, #ff9900, #ffff00, #6aa84f, #0000ff, #9900ff, #674ea7);
+            height: 32px;
+            width: 400px;
+        }
+
+        input.supra-greyscale {
+            -webkit-appearance: none;
+            background-image: linear-gradient(to right, #ffffff, #000000);
+            height: 32px;
+            width: 400px;
+        }
+
+        ::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width:30px;
+            height: 30px;
+            background: rgba(99, 16, 99, 0.61); 
+        }
+
+
+        .circle::-webkit-slider-thumb {
+            clip-path: circle(50% at 50% 50%);
+        }
+        .triangle::-webkit-slider-thumb {
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .square::-webkit-slider-thumb {
+            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
+        }
+        .pentagon::-webkit-slider-thumb {
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+        .hexagon::-webkit-slider-thumb {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+        .heptagon::-webkit-slider-thumb {
+            clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+        }
+        .octagon::-webkit-slider-thumb {
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        p{
+            margin: 1px;
+            padding: 1px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <header>
+        <h1 style="text-align: center;">SupraSliders</h1>
+    </header>
+
+    <div style="text-align: center;">
+        <p>
+            <input type="range" min="-50" max="50" value="0" class="supra-rainbow circle" />
+        </p>
+        <p>
+            <input type="range" min="-50" max="50" value="0" class="supra-greyscale triangle" />
+        </p>
+        <p>
+            <input type="range" min="-50" max="50" value="0" class="supra-greyscale square" />
+        </p>
+        <p>
+            <input type="range" min="-50" max="50" value="0" class="supra-greyscale pentagon" />
+        </p>
+        <p>
+            <input type="range" min="-50" max="50" value="0" class="supra-greyscale hexagon" />
+        </p>
+        <p>
+            <input type="range" min="-50" max="50" value="0" class="supra-greyscale heptagon" />
+        </p>
+        <p>
+            <input type="range" min="-50" max="50" value="0" class="supra-greyscale octagon" />
+        </p>
+
+    </div>
+
+</body>
+
+</html>
