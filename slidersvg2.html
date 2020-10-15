@@ -3,13 +3,19 @@
 
 <head>
     <style>
-
+        body {
+            font-family: "Lucida Console", Courier, monospace;
+            text-align: center;
+        }
 
         input.supra-rainbow {
             -webkit-appearance: none;
             background-image: linear-gradient(to right, #ff0000, #ff9900, #ffff00, #6aa84f, #0000ff, #9900ff, #674ea7);
             height: 32px;
             width: 400px;
+            outline-style: solid;
+            outline-color: black;
+            outline-width: 2px;
         }
 
         input.supra-greyscale {
@@ -74,8 +80,16 @@
         }
 
         .octagon::-webkit-slider-thumb {
+
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='-10 -10 120 120'><polygon fill='black' stroke='white' stroke-width='5' points='30 0, 70 0, 100 30, 100 70, 70 100, 30 100, 0 70, 0 30' /></svg>");
-            /* clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); */
+            /*
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            */
+            /*
+            outline-style: solid;
+            outline-color: white;
+            outline-width: 7px;
+            */
         }
 
         p {
@@ -96,9 +110,11 @@
     <div style="text-align: center;">
         <p>
             <span>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACD0lEQVRYCb1WvU7DMBB2KoYKiQWGSogRoT5GBc/A3sdi6yvB1IWKgdIBqXNVBIScq8/6fHF8ddoSCezcfX92TIKre1zOuVr/TCaTHkp1XQmrETOvqqpMDAP2lHVnTErNtfH65jYFC7Wr5aufg2cF6dwBCIiaZRrcafLytXX3n+++kguRDHCoOeVw2BGppYK0AsC8z6rZmOe5EAMGnsJc9HOLiQJwmGPPEQKLhH4IgAaAABxzhDa8RDsEkBsAZP5flw/AiXLGd6u3XNv3rj8WWQwWCc9oB3JMOcnr35/oz0rjBbNtXqx86jVG34cASKYBp7hnrwG2wjICCWMKjx7GFEbX5AvjP0YlpIfmFfvcvGr5KuELD4/J/BixCUhcw5x7JWHCGYBQ18gGXRjUS7DmDoyWC/e9e0pe31odzGW0sOPxOH4RYQU8lpgLj00RhvV4Pp/P3SD1iQSIBVgY/a6RsayRwoczkAOyYEokVctx2CsE0CIM0r3S+5yWD5B7DLmVlAYRPMLAM9oBNPsIpzj7hI/+JcNreR9iytCqYYFYveCjHdhsNl4DQEuwpA9NNhd+FGA4HAZNEELhgAm0ptNpSyUKIF1OCGKLVVCAhpjPZrMWMzoDuosz8XQ5co/nF7qdvYexgHhRmpQNIGCEANE6oGwsnJy59M0AApJLB9lVu39bxmCaX0MAtaAOpPvgWeMf7rND4kqeq7IAAAAASUVORK5CYII=" />
+                <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACD0lEQVRYCb1WvU7DMBB2KoYKiQWGSogRoT5GBc/A3sdi6yvB1IWKgdIBqXNVBIScq8/6fHF8ddoSCezcfX92TIKre1zOuVr/TCaTHkp1XQmrETOvqqpMDAP2lHVnTErNtfH65jYFC7Wr5aufg2cF6dwBCIiaZRrcafLytXX3n+++kguRDHCoOeVw2BGppYK0AsC8z6rZmOe5EAMGnsJc9HOLiQJwmGPPEQKLhH4IgAaAABxzhDa8RDsEkBsAZP5flw/AiXLGd6u3XNv3rj8WWQwWCc9oB3JMOcnr35/oz0rjBbNtXqx86jVG34cASKYBp7hnrwG2wjICCWMKjx7GFEbX5AvjP0YlpIfmFfvcvGr5KuELD4/J/BixCUhcw5x7JWHCGYBQ18gGXRjUS7DmDoyWC/e9e0pe31odzGW0sOPxOH4RYQU8lpgLj00RhvV4Pp/P3SD1iQSIBVgY/a6RsayRwoczkAOyYEokVctx2CsE0CIM0r3S+5yWD5B7DLmVlAYRPMLAM9oBNPsIpzj7hI/+JcNreR9iytCqYYFYveCjHdhsNl4DQEuwpA9NNhd+FGA4HAZNEELhgAm0ptNpSyUKIF1OCGKLVVCAhpjPZrMWMzoDuosz8XQ5co/nF7qdvYexgHhRmpQNIGCEANE6oGwsnJy59M0AApJLB9lVu39bxmCaX0MAtaAOpPvgWeMf7rND4kqeq7IAAAAASUVORK5CYII=" />
                 <input type="range" min="-50" max="50" value="0" class="supra-rainbow circle" />
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAB2ElEQVRYCb1X203DMBR1IoZgjKCoQ7ADbBDBGuUTVoAdGCKVsgZbQE6kY50414/UDf655t7zit3Stvmdl9u5mqYxGVdIuTtTyWjGTBWqmNIw2QAqero/uZeHV/Xc7D+mdzf+jI68XJBmBphXQAE4fD5+bYxKGs/fTx4WsXGtR8jmFuaQ0+CqKVZucwIEKlkJ1+55GuFJrE7gKHOE5gPRgw+yCsDmf1YfgMmY9IgQ1KYXPHwA/EEA9ket0GMJoIlSxnwh1WLAp+fqBEqEUyE4Y03pceYDhEdDwBFVvdphGIo8SGK1SJyxWhjt4Rrwsbb8Ky4lqUDNntfkr6BGrIYbDYCETFljkNOJBqgx3cNtp2lK4mtOoYTbdl1nBrjlizKmhU9GfwWptKmZmX5upjg68wEsIU2uJAurPcWqhmK4XwLwS8LbeGbfrCpsAuZmCQZcevpvRPxwsBLHRInNzTUssZsAAKVCYE4y9qnFYCGGfJpj7k+A4FwI4ChEDmvMWDmXy8X1fU9KPAAQKUGvULDRwPr0oG7eBQpQYoGPCVEN1SZ4cwUcoPI6sN97GjljaGIlAyyA4IdoLogag289Nfpc2QAeGARhP1ZzxuRlf5wSGArq9QATzsnL1T8qFdD/csClEAAAAABJRU5ErkJggg==" />
+                <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAB2ElEQVRYCb1X203DMBR1IoZgjKCoQ7ADbBDBGuUTVoAdGCKVsgZbQE6kY50414/UDf655t7zit3Stvmdl9u5mqYxGVdIuTtTyWjGTBWqmNIw2QAqero/uZeHV/Xc7D+mdzf+jI68XJBmBphXQAE4fD5+bYxKGs/fTx4WsXGtR8jmFuaQ0+CqKVZucwIEKlkJ1+55GuFJrE7gKHOE5gPRgw+yCsDmf1YfgMmY9IgQ1KYXPHwA/EEA9ket0GMJoIlSxnwh1WLAp+fqBEqEUyE4Y03pceYDhEdDwBFVvdphGIo8SGK1SJyxWhjt4Rrwsbb8Ky4lqUDNntfkr6BGrIYbDYCETFljkNOJBqgx3cNtp2lK4mtOoYTbdl1nBrjlizKmhU9GfwWptKmZmX5upjg68wEsIU2uJAurPcWqhmK4XwLwS8LbeGbfrCpsAuZmCQZcevpvRPxwsBLHRInNzTUssZsAAKVCYE4y9qnFYCGGfJpj7k+A4FwI4ChEDmvMWDmXy8X1fU9KPAAQKUGvULDRwPr0oG7eBQpQYoGPCVEN1SZ4cwUcoPI6sN97GjljaGIlAyyA4IdoLogag289Nfpc2QAeGARhP1ZzxuRlf5wSGArq9QATzsnL1T8qFdD/csClEAAAAABJRU5ErkJggg==" />
 
             </span>
         </p>
@@ -123,16 +139,21 @@
             <input type="range" min="-50" max="50" value="0" class="supra-greyscale octagon" />
         <div class="vader"></div>
         <div class="heart"></div>
+
         <svg width="32" height="32">
             <image width="32" height="32"
                 xlink:href="https://lh3.googleusercontent.com/nRAljevKTAK8_nabVsfo57_qplco_87Te32qNvuqK0wwhNTidR2fhFwZa2fVtMLjBq02M7UwYxs1H30rTo47h0ZkXVt0_NrWog7_CBGd1-pD9NaVa6d6tj6C9ZjsBiHbNjb9qhwCAdg">
             </image>
         </svg>
 
-        <img width="32" height="32" src="https://lh5.googleusercontent.com/VjzmJt7pB8CK5iuXeT6ckaMvfsszUxzmIltIxOFz6soWdhY-4QCKwf-Ub3q5hyRQ8wAPBLR3G8OFFfjOeGF9kMxEePWbZS8rQGeFymYEVVppxcPPMlrfe5TCr32eloKS1BF85aZBMr8" />
-        <img width="32" height="32" src="https://lh3.googleusercontent.com/nRAljevKTAK8_nabVsfo57_qplco_87Te32qNvuqK0wwhNTidR2fhFwZa2fVtMLjBq02M7UwYxs1H30rTo47h0ZkXVt0_NrWog7_CBGd1-pD9NaVa6d6tj6C9ZjsBiHbNjb9qhwCAdg" />
+        <img width="32" height="32"
+            src="https://lh5.googleusercontent.com/VjzmJt7pB8CK5iuXeT6ckaMvfsszUxzmIltIxOFz6soWdhY-4QCKwf-Ub3q5hyRQ8wAPBLR3G8OFFfjOeGF9kMxEePWbZS8rQGeFymYEVVppxcPPMlrfe5TCr32eloKS1BF85aZBMr8" />
+        <img width="32" height="32"
+            src="https://lh3.googleusercontent.com/nRAljevKTAK8_nabVsfo57_qplco_87Te32qNvuqK0wwhNTidR2fhFwZa2fVtMLjBq02M7UwYxs1H30rTo47h0ZkXVt0_NrWog7_CBGd1-pD9NaVa6d6tj6C9ZjsBiHbNjb9qhwCAdg" />
 
-        <a href="https://onlineimagetools.com/resize-image?chain=convert-png-to-base64%253Fbase64-split%253Dfalse%2526base64-split-length%253D76%2526data-uri%253Dtrue&width=32&height=32&ratio=false">Embed images as B64 here.</a>
+        <a
+            href="https://onlineimagetools.com/resize-image?chain=convert-png-to-base64%253Fbase64-split%253Dfalse%2526base64-split-length%253D76%2526data-uri%253Dtrue&width=32&height=32&ratio=false">Embed
+            images as B64 here.</a>
         </p>
 
     </div>
