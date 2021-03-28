@@ -1,0 +1,137 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+div#tetrahedron {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg)
+        translateX(0px) translateY(0px) translateZ(0px)
+        scale3d(1, 1, 1);
+    width: 100px;
+    height: 87px;
+
+    animation-name: allanimation;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+    /*animation: rotateanimation 5s infinite linear;*/
+}
+div#tetrahedron > div > svg > polygon{
+    fill: #fff;
+    stroke: #000;
+    stroke-width: 3px;
+    opacity: 0.9;
+}
+div#tetrahedron > div{
+    transform-origin: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100px;
+    height: 87px;
+    backface-visibility: visible;
+}
+div#tetrahedron > div.bottom {
+    transform: rotateX(-90deg) translateZ(43.5px);
+
+
+}
+div#tetrahedron > div.left {
+    transform-origin: 50% 100% 0;
+    transform: translateX(-25px) rotateY(-60deg) rotateX(19.49deg);
+
+    animation-name: leftanimation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+div#tetrahedron > div.right {
+    transform-origin: 50% 100% 0;
+    transform: translateX(25px) rotateY(60deg) rotateX(19.49deg);
+
+    animation-name: rightanimation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+div#tetrahedron > div.back {
+    transform-origin: 50% 100% 0;
+    transform: translateZ(-43.5px) rotateX(-19.49deg);
+
+    animation-name: backanimation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes backanimation{
+    from{
+        transform:translateZ(-43.5px)  rotateX(-19.49deg);
+    }
+    to{
+        transform:translateZ(-43.5px)  rotateX(90deg);
+    }
+}
+
+@keyframes rightanimation{
+    from{
+        transform:translateX(25px) rotateY(60deg) rotateX(19.49deg);
+    }
+    to{
+        transform:translateX(25px) rotateY(60deg) rotateX(-90deg);
+    }
+}
+
+@keyframes leftanimation{
+    from{
+        transform:translateX(-25px) rotateY(-60deg) rotateX(19.49deg);
+    }
+    to{
+        transform:translateX(-25px) rotateY(-60deg) rotateX(-90deg);
+    }
+}
+
+@keyframes allanimation{
+    from{
+        transform: rotateZ(0deg) srotateX(0deg);
+    }
+    to{
+        transform: rotateZ(-30deg) rotateX(-90deg);
+    }
+}
+
+
+div#tetrahedron > div > svg > circle{
+    fill: #fff;
+    stroke: #000;
+    stroke-width: 3px;
+    opacity: 0.9;
+}
+
+div#tetrahedron > div.cback {
+    transform: rotateX(-90deg) translateZ(43.5px) translateX(38.5px) translateY(-10px);   
+}
+
+div#tetrahedron > div.cleft {
+    transform: rotateX(-90deg) translateZ(43.5px) translateX(-10px) translateY(75px);   
+}
+
+div#tetrahedron > div.cright {
+    transform: rotateX(-90deg) translateZ(43.5px) translateX(90px) translateY(75px);   
+}
+
+div#tetrahedron > div.ctopleft {
+    transform: rotateX(-90deg) translateZ(43.5px) translateX(43.5px) translateY(180px);   
+}
+
+div#tetrahedron > div.ctopright {
+    transform: rotateX(-90deg) translateZ(43.5px) translateX(160px) translateY(-20px);   
+}
+
+div#tetrahedron > div.ctopback {
+    transform: rotateX(-90deg) translateZ(43.5px) translateX(-73.5px) translateY(-20px);   
+}
