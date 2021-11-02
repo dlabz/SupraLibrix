@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    *[class^=f6]{
+        color: black;
+        background-color: aliceblue;
+    }
+
+    *[class^=f6]::before {
+        content: attr(data-b);
+        text-decoration: none;
+        color: blue;
+    }
+
+</style>
+</head>
+<body>
+    <h1>
+        HTML and PhySix
+    </h1>
+    <p>
+        This method allows us to attach PhySix values to portions of text. We could identify, in example word <q class="f63n00">genocide</q> and attach values to it.
+</p>
+<p>
+    Sometimes, a whole sentence can be of interest. <span class="f65n006n117nbb">I'm not very inpired to make examples today.</span> But, I'm sure you'll find intereting uses for it.
+</p>
+
+<h4>even this whole paragraph can be marked</h4>
+<p class="f64n006n44">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat in arcu eu lobortis. Donec vitae semper ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non eleifend nisi. Phasellus rhoncus nulla dolor, non commodo arcu convallis ut. Praesent pellentesque egestas lorem ut feugiat. Vivamus pharetra ante at nisi pulvinar, vel gravida lorem rutrum. Nullam dignissim sit amet lacus a porta. Integer tincidunt, lacus ac finibus ultricies, risus dui pharetra tellus, eu gravida purus est vitae felis. Sed egestas sem risus, sed semper risus varius sit amet. Sed tempus consequat tortor vel eleifend. Sed sed lobortis nunc.
+</p>
+<p>
+    Mark a single item in a list
+    Shoping list:
+    <ul>
+        <li>milk</li>
+        <li>bread</li>
+        <li class="f64n006n44">porkchops</li>
+        <li>water</li>  
+    </ul>
+</p>
+
+<section>
+    <h1>TO DO</h1>
+    Colors are not yet passed to individual values. It's a small task, but I was excited to share the idea. 
+</section>
+
+
+<script type="text/javascript">
+const symbols = ['●','','','▲','◼','⬟','⬢','🂧','🂨','🂩','🂪']
+const [...result] = [...document.querySelectorAll('*[class^=f6]').entries()]
+.map(([v,k])=>{
+    const {className} = k
+    console.log({k,className})
+    const reg = /(f6)(([0-9]n[0-9a-z]{2})+)/ig;
+    const [[match,f,g]] = className.matchAll(reg)
+    return [g,k];
+    
+})
+.map(([lstr,k])=>{   
+    console.log({lstr,k})
+    const rege = /([0-9]n[0-9a-z]{2})/ig;
+    
+    const [...d] = lstr.matchAll(rege)
+    const a = d.map(([n])=>n)
+    console.log({a})
+    return [a,k];
+})
+.map(([[...nstr],k])=>{   
+    console.log({nstr,k})
+    const rege = /([0-9])(n)([0-9a-z])([0-9a-z])/i;
+    const sum = ""
+    const d = nstr.map((s)=>s.match(rege))
+    .map(([m,shape,n,x,y])=>[  
+        parseInt(shape,16),
+        [
+            parseInt(x,16),
+            parseInt(y,16)
+        ]
+    ])
+    .map(([s,xy])=>[s,xy,symbols[s],k])
+    console.log({d})
+    return d;
+})
+
+console.log(result.map(entry=>{
+    let sum = []
+    let ks = []
+    let a = entry.map(([s,xy,str,k])=>{
+        sum.push(str)
+        ks.push(k)
+        return [str,[s,xy]]
+    })
+    const ssum = sum.join('')
+    
+    return [
+        a,[ssum,ks]
+    ]
+
+})
+.map(([a,[ssum,ksa]])=>{
+    console.log({ksa,ssum})
+    const [ks] = ksa;
+    const b = ks.className
+    
+    console.log(b,ks) 
+    const [e] = [...document.querySelectorAll(`*[class="${b}"]`).values()]
+    e.setAttribute("data-b",ssum)
+    e.classList.add("b")
+    return a
+
+})
+)
+</script>
+</body>
+</html>
